@@ -18,7 +18,7 @@
                </button>
                <Audio></Audio>
                
-               <button class="btn btn-outline-warning" type="button" id="send">
+               <button class="btn btn-outline-warning" type="button" id="photo">
                    <span class="fa fa-photo"></span>
                </button>
             </div>

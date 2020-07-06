@@ -1,32 +1,55 @@
 <template>
     <div>
-        <button class="btn btn-outline-info" id="play" type="button">
-            <span class="fa fa-music"></span>
+        <button class="btn btn-outline-info" id="play" type="button" v-on:click="newSound()" >
+            <span v-bind:class="microphone"></span>
         </button>
         
-        <audio    id="audio" >
+        
+        
                    
-        </audio>
+        
     </div>
 </template>
 <script>
-const audio=document.getElementById('audio')
+
 export default {
     name:'Audio',
-    
-    methods:{
-        handleSuccess:(stream)=>{
-            //const audio=document.getElementById('audio')
-            
-            if(window.URL){
-                audio.src=window.URL.createObjestURL(stream);
-            }else{
-                audio.src=stream;
-            }
+    data:()=>{
+        return {
+            sound:false,
+            microphone:'fa fa-microphone',
+            chunk:[]
         }
     },
-    created(){
-        navigator.mediaDevices.getUserMedia({audio:true,video:false}).then(this.handleSuccess)
+    
+    methods:{
+        
+        newSound(){
+           
+
+                 //media.start();
+
+                if(this.sound===false){
+                this.sound=true;
+                this.microphone='fa fa-stop'
+                
+                }else{
+                this.sound=false;
+                this.microphone='fa fa-microphone'
+                
+            }
+            
+                       
+            
+
+        },
+        
+             
+
+    },
+    computed:{
+        
+       
     }
 }
 </script>
