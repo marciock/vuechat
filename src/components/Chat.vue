@@ -31,8 +31,8 @@ import io from 'socket.io-client'
 import Audio from './Audio'
 import Photo from './Photo'
 
-const socket=io('https://localhost:3000')
-//const socket=io()
+//const socket=io('https://localhost:3000')
+const socket=io()
 
 export default {
     name:'Chat',
