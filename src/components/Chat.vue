@@ -20,9 +20,7 @@
                </button>
                <Audio @audio-maked="showAudio"></Audio>
                
-               <button class="btn btn-outline-warning" type="button" id="photo">
-                   <span class="fa fa-photo"></span>
-               </button>
+               <Photo @image-maked="showImage"></Photo>
             </div>
         </div>
 
@@ -31,8 +29,10 @@
 <script>
 import io from 'socket.io-client'
 import Audio from './Audio'
+import Photo from './Photo'
 
-const socket=io('http://localhost:3000')
+const socket=io('https://localhost:3000')
+//const socket=io()
 
 export default {
     name:'Chat',
@@ -46,7 +46,8 @@ export default {
             }
         },
     components:{
-        Audio
+        Audio,
+        Photo
     },
     
     sockets:{
@@ -70,7 +71,13 @@ export default {
         },
         showAudio(load){
             this.sendData.name=this.alias;
-            this.sendData.message=`<audio src="${load.sound}" controls="true"></audio>`;
+            this.sendData.message=`<audio src="${load.sound}" controls="true" class=" w-50 p-3 align-middle"></audio>`;
+
+            socket.emit('mensagem',this.sendData);
+        },
+        showImage(load){
+            this.sendData.name=this.alias;
+            this.sendData.message=`<image src="${load.image}"  class=" w-25 h-auto p-3 align-middle"></audio>`;
 
             socket.emit('mensagem',this.sendData);
         }
@@ -91,6 +98,8 @@ export default {
 </script>
 <style>
 .space{
-    height: 10em;
+    height: 12em;
+    overflow-y: auto;
 }
+
 </style>

@@ -8,5 +8,5 @@ import VueSocketIO from 'vue-socket.io'
 //export const SocketIO=io('http://localhost:3000');
  Vue.use(new VueSocketIO({
      debug:true,
-     connection:io('http://localhost:3000')
+     connection:io()
  }))
