@@ -2,21 +2,23 @@
     <div>
         <div class="form-group">
             <label for="alias">Nome</label>
-            <input type="text" id="alias" name="alias" class="form-control">
+            <input type="text" id="alias" v-model="alias" class="form-control">
         </div>
-        <div class="form-group border " id="content"  >
-            <div v-for="c in content" v-bind:key="c">
-                <strong>{{c.name}} :</strong><span>{{c.message}}</span>
-            </div>
+        <div class="form-group border space"  >
+        <ul>
+            <li v-for="(content,index) in contents" :key="index" >
+                <strong>Nome: {{content.name}} </strong><span v-html="content.message"></span>
+            </li>
+        </ul>
         </div>
         <div class="form-group">
             <div class="input-group-append" id="buttons-send">
-             <input type="text" id="message"  class="form-control" aria-describedby="buttons-send">
+             <input type="text" id="message"  class="form-control" aria-describedby="buttons-send" v-model="message">
            
-               <button class="btn btn-outline-success" type="button" id="send" v-on:click="clickSend()">
+               <button class="btn btn-outline-success" type="button" id="send" v-on:click="clickSend(alias,message)">
                    <span class="fa fa-send"></span>
                </button>
-               <Audio></Audio>
+               <Audio @audio-maked="showAudio"></Audio>
                
                <button class="btn btn-outline-warning" type="button" id="photo">
                    <span class="fa fa-photo"></span>
@@ -37,8 +39,10 @@ export default {
     
         data:()=>{
             return{
+                alias:'',
+                message:'',
                 sendData:{name:'',message:''},
-                content:{name:'',message:''}
+                contents:[]
             }
         },
     components:{
@@ -57,20 +61,25 @@ export default {
     methods:{
         clickSend(){
             
-            this.sendData.message=document.getElementById('message').value;
-            this.sendData.name=document.getElementById('alias').value;
+            this.sendData.message=this.message;
+            this.sendData.name=this.alias;
             
             socket.emit('mensagem',this.sendData);
             
             
         },
+        showAudio(load){
+            this.sendData.name=this.alias;
+            this.sendData.message=`<audio src="${load.sound}" controls="true"></audio>`;
+
+            socket.emit('mensagem',this.sendData);
+        }
         
         
     },
     created(){
         socket.on('conteudo',d=>{
-            this.content.name=d.name;
-            this.content.message=d.message;
+            this.contents.push({'name':d.name,'message':d.message})
         })
         
     }
@@ -81,8 +90,7 @@ export default {
 }
 </script>
 <style>
-#content{
+.space{
     height: 10em;
-    width: auto;
 }
 </style>
