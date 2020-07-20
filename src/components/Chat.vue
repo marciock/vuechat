@@ -49,16 +49,6 @@ export default {
         Audio,
         Photo
     },
-    
-    sockets:{
-        connect:()=>{
-            console.log('Conectado');
-        },
-        customEmit:(val)=>{
-            console.log(val);
-        },
-        
-    },
     methods:{
         clickSend(){
             

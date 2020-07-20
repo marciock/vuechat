@@ -23,7 +23,6 @@ export default {
     data:()=>{
         return {
             sound:false,
-            microphone:'fa fa-microphone',
             chunks:[],
         }
     },
