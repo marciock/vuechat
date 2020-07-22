@@ -29,7 +29,7 @@ export default {
     
     methods:{
         newSound(value){
-
+            
             this.sound=value;
 
             navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
@@ -38,6 +38,7 @@ export default {
                  
                 console.log(mr);
                 if(this.sound===true){
+                    this.chunks=[];
                     mr.ondataavailable=data=>{
                         
                         //console.log(data.data);
@@ -55,6 +56,7 @@ export default {
             mr.onstop=()=>{
                 console.log('stop');
                const blob=new Blob(this.chunks,{type:'audio/ogg;code=opus'});
+               this.chunks=[];
                const reader=new window.FileReader();
                reader.readAsDataURL(blob);
                reader.onloadend=()=>{
